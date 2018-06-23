@@ -4,9 +4,8 @@ def palindrome_partition(s):
     return result
 
 def palindrome_substring(s):
-    cache = [[False for i in range(len(s))] for j in range(len(s))]
-    for i in range(len(s)):
-        cache[i][i] = True
+    cache = [[i == j  for i in range(len(s))] for j in range(len(s))]
+
     for i in range(len(s)-1, -1, -1):
         for j in range(i + 1, len(s)):
             if i + 1 == j and s[i] == s[j]:
