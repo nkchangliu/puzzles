@@ -5,7 +5,6 @@ class Trie(object):
     def __init__(self):
         self._trie = {}
 
-
     def insert(self, text):
         trie = self._trie
         for char in text:
