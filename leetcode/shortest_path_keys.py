@@ -3,19 +3,20 @@ from queue import Queue
 def shortest_path(grid):
     start, count_keys = find_start(grid)
 
-    visited = set()
     need_to_visit = Queue()
     need_to_visit.put((start, "", 0))
+    moves_dict = {}
+    moves_dict[(start, "")] = 0
 
     while need_to_visit.qsize() > 0:
         print(list(need_to_visit.queue))
         (node, keys, moves) = need_to_visit.get()
-        visited.add((node, keys))
         for (successor, successor_keys, successor_moves) in get_successor(grid, node, keys, moves):
             if len(successor_keys) == count_keys:
                 return successor_moves
-            elif (successor, successor_keys) not in visited:
+            elif (successor, successor_keys) not in moves_dict:
                 need_to_visit.put((successor, successor_keys, successor_moves))
+                moves_dict[(successor, successor_keys)] = successor_moves
     return -1
 
 def find_start(grid):
@@ -39,7 +40,7 @@ def get_successor(grid, node, keys, moves):
                 successors.append(((next_x, next_y), keys, moves + 1))
             elif grid[next_x][next_y].islower():
                 if grid[next_x][next_y] not in keys:
-                    new_keys = keys + grid[next_x][next_y]
+                    new_keys = ''.join(sorted(keys + grid[next_x][next_y]))
                     successors.append(((next_x, next_y), new_keys, moves + 1))
                 else:
                     successors.append(((next_x, next_y), keys, moves + 1))
