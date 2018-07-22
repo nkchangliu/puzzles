@@ -1,15 +1,24 @@
 def path_sum(root, sum):
-    res = []
-    helper(root, sum, [], res)
-    return res
+    return [x[::-1] for x in  helper(root, sum)]
 
-def helper(root, sum, path, res):
-    if root and root.left is None and root.right is None and root.val = sum:
-        path.append(root.val)
-        res.append(path)
-    elif root is not None:
-        left_path = path + [root.val]
-        right_path = path + [root.val]
-        helper(root.left, sum - root.val, left_path, res)
-        helper(root.right, sum - root.val, right_path, res)
+def helper(root, sum):
+    if not root:
+        return []
+    if root and not root.left and not root.right and root.val == sum:
+        return [[root.val]]
+    elif root and not root.left and not root.right:
+        return []
+    else:
+        left_lst = helper(root.left, sum - root.val)
+        right_lst = helper(root.right, sum - root.val)
+        new_lst = left_lst + right_lst
+        for lst in new_lst:
+            lst.append(root.val)
+        return new_lst
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
