@@ -1,13 +1,24 @@
 def buy_n_sell(lst, k):
     if not lst or k == 0:
         return 0
-    res = [[0 for i in range(len(lst))] for j in range(k + 1)]
+    if k * 2 >= len(lst):
+        return quick_solve(lst)
+    res = [0 for i in range(len(lst))]
     for j in range(1, k + 1):
-        max_diff = res[j - 1][0] - lst[0]
+        new_res = [0 for i in range(len(lst))]
+        max_diff = res[0] - lst[0]
         for i in range(1, len(lst)):
-            res[j][i] = max(res[j][i - 1], lst[i] + max_diff)
-            max_diff = max(max_diff, res[j - 1][i] - lst[i])
-    return res[-1][-1]
+            new_res[i] = max(new_res[i - 1], lst[i] + max_diff)
+            max_diff = max(max_diff, res[i] - lst[i])
+        res = new_res
+    return res[-1]
 
+
+def quick_solve(lst):
+    res = 0
+    for i in range(1, len(lst)):
+        if lst[i] - lst[i - 1] > 0:
+            res += lst[i] - lst[i - 1]
+    return res
 
 

@@ -36,7 +36,25 @@ def get_big_square(matrix, num_row, num_col):
     return i
 
 
+def maximal_square_dp(matrix):
+    max_len = 0
+    res = [[0 for i in range(len(matrix[0]))] for j in range(len(matrix))]
+    for i in range(len(matrix[0])):
+        res[0][i] = matrix[0][i]
+        max_len = max(max_len, res[0][i])
+    for i in range(len(matrix)):
+        res[i][0] = matrix[i][0]
+        max_len = max(max_len, res[i][0])
+    for i in range(1, len(matrix)):
+        for j in range(1, len(matrix[0])):
+            if matrix[i][j] == 0:
+                res[i][j] = 0
+            else:
+                res[i][j] = min(res[i-1][j], res[i][j - 1], res[i - 1][j - 1]) + 1
+            max_len = max(max_len, res[i][j])
+    return max_len ** 2
+
 matrix = [[1, 0, 1, 0, 0],[1, 0, 1, 1, 1],[1, 1, 1, 1, 1],[1, 0, 0, 1, 0]]
 
-print(maximal_square(matrix))
+print(maximal_square_dp(matrix))
 
