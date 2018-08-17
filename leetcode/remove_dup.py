@@ -1,14 +1,13 @@
 def remove_dup(lst):
-    if len(lst) <= 1:
-        return lst
-    i, j = 1, 1
-    while i < len(lst) and j < len(lst):
-        if lst[j] != lst[i - 1]:
-            lst[i], lst[j] = lst[j], lst[i]
+    lst.sort()
+    i = 0
+    for j in range(len(lst)):
+        if lst[i] != lst[j]:
+            lst[i + 1], lst[j] = lst[j], lst[i + 1]
             i += 1
-            j += 1
-        else:
-            j += 1
-    return i
+    for j in range(len(lst) - i - 1):
+        lst.pop()
+    return lst
 
-print(remove_dup([1, 1, 2, 3, 3, 4, 5]))
+print(remove_dup([3, 1, 2, 1, 3, 2, 2, 2, 4, 5, 4, 5, 5]))
+
