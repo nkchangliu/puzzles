@@ -10,10 +10,6 @@ def build_tree(preorder, inorder):
     inorder_right = inorder[ind+1:]
     preorder_left = preorder[1:ind+1]
     preorder_right = preorder[ind+1:]
-    print(inorder_left)
-    print(inorder_right)
-    print(preorder_left)
-    print(preorder_right)
     root.left = build_tree(preorder_left, inorder_left)
     root.right = build_tree(preorder_right, inorder_right)
 
