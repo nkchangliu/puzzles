@@ -1,11 +1,18 @@
-def check_pattern(lst):
-    min_num = float("inf")
-    for i in range(len(lst) - 1):
-        for j in range(i+1, len(lst)):
-            if lst[i] > lst[j] and min_num < lst[j]:
-                return True
-        min_num = min(min_num, lst[i])
+def pattern(lst):
+    smallest = float("inf")
+    left_min = [smallest]
+    for num in lst:
+        smallest = min(num, smallest)
+        left_min.append(smallest)
+    stack = []
+    for i in range(len(lst) - 1, 0, -1):
+        if lst[i] > left_min[i]:
+             while stack and stack[-1] <= left_min[i]:
+                 stack.pop()
+             if stack and stack[-1] < lst[i]:
+                 return True
+        stack.append(lst[i])
     return False
 
-print(check_pattern([3, 1, 4, 2]))
+print(pattern([1, 0, 1, -4, -3]))
 
